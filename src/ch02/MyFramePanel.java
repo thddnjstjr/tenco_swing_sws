@@ -42,8 +42,8 @@ public class MyFramePanel extends JFrame{
 		
 		// panel1 ---> FlowLayout (이해할 수 있는 동작을 작성)
 		panel1.setLayout(new BorderLayout());
-		panel1.add(button1, BorderLayout.WEST);
-		// panel1.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		//panel1.add(button1, BorderLayout.WEST);
+		 panel1.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		panel2.add(button2);
 		// panel2.setLayout(new FlowLayout(FlowLayout.LEFT));
 		

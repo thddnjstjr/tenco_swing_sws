@@ -11,7 +11,7 @@ public class LottoMaker {
 	// 6개의 랜덤 번호를 생성하는 메서드 필요하다.
 	public int[] createNumber() {
 		
-		int[] lottoWinNum = new int[6];
+		int[] lottoWinNum = new int[7];
 		Random random = new Random();
 		// 10
 		// 10 20

@@ -83,9 +83,17 @@ public class GameFrame extends JFrame {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				repaint();
+				if(playerx >= (enemyx - 40) && playerx <= (enemyx +40)) {
+					if(playery >= (enemyy - 40) && playery <= (enemyy +40)) {
+						player1 = null;
+					}
 				}
 				repaint();
+				
+				}
+				repaint();
+				
+				
 			}
 		}
 
@@ -95,6 +103,7 @@ public class GameFrame extends JFrame {
 		setTitle("Thread 활용한 미니 예제");
 		setSize(600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
 		try {
 			// 예외가 발생할 수 있는 코드를 작성하는 영역
@@ -153,7 +162,6 @@ public class GameFrame extends JFrame {
 					playery += 10;
 				} else if (code == KeyEvent.VK_SPACE) {
 					// 1. 스페이스를 눌렀을 때 적군을 멈출 수 있도록 코드 수정
-					
 					if((space % 2) == 0) {
 						flag = false;
 					} else {
@@ -164,11 +172,7 @@ public class GameFrame extends JFrame {
 				}
 
 				// 2. player가 적군과 만났다면 player 그림을 없애주세요
-				if(playerx == enemyx ) {
-					if(playery == enemyy+25 || playery == enemyy-25) {
-						player1 = null;
-					}
-				}
+				
 				
 				repaint();
 			}

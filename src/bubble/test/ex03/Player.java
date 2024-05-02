@@ -1,4 +1,4 @@
-package bubble.test.ex01;
+package bubble.test.ex03;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -8,6 +8,7 @@ public class Player extends JLabel implements Moveable{
 	private int x;
 	private int y;
 	private ImageIcon playerR, playerL;
+	private int count;
 	
 	// 움직임의 상태
 	private boolean left;
@@ -26,7 +27,15 @@ public class Player extends JLabel implements Moveable{
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-	
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public void setX(int x) {
+		this.x += x;
+	}
+	public void setY(int y) {
+		this.y += y;
+	}
 	public Player() {
 		initData();
 		setInitLayout();
@@ -41,8 +50,8 @@ public class Player extends JLabel implements Moveable{
 		playerL = new ImageIcon("images/playerL.png");
 		
 		// 처음 실행 시 초기 값 셋팅
-		x = 55;
-		y = 535;
+		x = 400;
+		y = 540;
 		
 		// 플레이어가 가만히 멈춘 상태
 		left = false;
@@ -56,9 +65,11 @@ public class Player extends JLabel implements Moveable{
 	}
 
 	@Override
-	public void left() {
+	public  void left() {
+		
 		left = true;
 		setIcon(playerL);
+		if(count == 0) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -74,8 +85,10 @@ public class Player extends JLabel implements Moveable{
 				}
 				
 			}
-		}).start();
 		
+		}).start();
+		}
+		count++;
 		
 		
 		// 왼쪽 방향키 이벤트 발생 시
@@ -87,10 +100,9 @@ public class Player extends JLabel implements Moveable{
 
 	@Override
 	public void right() {
-		
 		right = true;
 		setIcon(playerR);
-		
+		if(count == 0) {
 		new Thread(new Runnable() {
 			
 			@Override
@@ -107,17 +119,58 @@ public class Player extends JLabel implements Moveable{
 				}	
 			}
 		}).start();
+		}
+		count++;
 		
 	} // end of right
 
 	@Override
-	public void up() {
+	public  void up() {
 		System.out.println("점프");
+		up = true;
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				for(int i = 0; i< 130 / JUMPSPEED; i++) {
+					y = y - JUMPSPEED;
+					setLocation(x,y);
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				up = false;
+				down();
+			}
+		}).start();
+		// 객체의 상태값을 잘 조절해야 한다.
 	}
 
 	@Override
 	public void down() {
 		System.out.println("다운");
+		down = true;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i = 0; i < 130 / JUMPSPEED; i++) {
+					y = y + JUMPSPEED;
+					setLocation(x,y);
+					try {
+						Thread.sleep(3);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+		count++;
+		// 상태 처리
+		down = false;
 	}
 	
 	

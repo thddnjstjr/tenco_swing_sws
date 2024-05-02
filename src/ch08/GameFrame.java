@@ -172,7 +172,11 @@ public class GameFrame extends JFrame {
 				}
 
 				// 2. player가 적군과 만났다면 player 그림을 없애주세요
-				
+				if(playerx >= (enemyx - 40) && playerx <= (enemyx +40)) {
+					if(playery >= (enemyy - 40) && playery <= (enemyy +40)) {
+						player1 = null;
+					}
+				}
 				
 				repaint();
 			}
@@ -180,4 +184,5 @@ public class GameFrame extends JFrame {
 		});
 	}
 
+	
 }

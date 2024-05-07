@@ -1,4 +1,4 @@
-package bubble;
+package bubble.test.ex08Class;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,21 +7,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import bubble.components.Bubble;
-import bubble.components.Enemy;
-import bubble.components.Player;
-
 public class BubbleFrame extends JFrame {
 
-	// 컨텍스트를 생성하는 방법 (셀프 참조)
-	BubbleFrame mContext = this;
-	int[] ePostionX = {200, 720 , 100};
-	int[] ePostionY = {300, 180 , 535};
 	private JLabel backgroundMap;
 	// 포함관계 - 콤포지션
 	private Player player;
 	private Bubble bubble;
-	private Enemy[] enemy = new Enemy[3];
+	private Enemy enemy;
 	public BubbleFrame() {
 
 		initData();
@@ -29,7 +21,8 @@ public class BubbleFrame extends JFrame {
 		addEventListener();
 
 		// Player 백그라운드 서비스 시작
-		
+		new Thread(new BackgroundPlayerService(player)).start();
+		new Thread(new BackgroundEnemyService(enemy)).start();
 	}
 
 	private void initData() {
@@ -41,14 +34,8 @@ public class BubbleFrame extends JFrame {
 		setContentPane(backgroundMap); // add 처리
 		setSize(1000, 640);
 
-		// mContext --> 참조 타입( ) --> 주소값에 크기는 기본 4byte 이다.
-		player = new Player(mContext);
-		
-		for(int i = 0; i < enemy.length; i++) {
-			enemy[i] = new Enemy(mContext);
-			enemy[i].setX(ePostionX[i]);
-			enemy[i].setY(ePostionY[i]);
-		}
+		player = new Player();
+		enemy = new Enemy();
 
 	}
 
@@ -60,9 +47,7 @@ public class BubbleFrame extends JFrame {
 		setVisible(true);
 
 		add(player);
-		add(enemy[0]);
-		add(enemy[1]);
-		add(enemy[2]);
+		add(enemy);
 	}
 
 	private void addEventListener() {
@@ -96,7 +81,8 @@ public class BubbleFrame extends JFrame {
 					}
 					break;
 				case KeyEvent.VK_SPACE:
-					player.attack();
+					bubble = new Bubble(player);
+					add(bubble);
 					break;
 				default:
 					break;
@@ -125,21 +111,9 @@ public class BubbleFrame extends JFrame {
 		});
 
 	}
-	
-	// getter
-	public Player getPlayer() {
-		return player;
-	}
-	public Enemy getEnemy(int array) {
-		return enemy[array];
-	}
-	public int getEnemylength() {
-		return enemy.length;
-	}
+
 	// 코드 테스트
 	public static void main(String[] args) {
-		// main 함수를 가지고 있는 클래스는 하위에 생성된 모든 객체들에
-		// 주소값을 알고 있다.  (중요! 중요! 중요!)
 		new BubbleFrame();
 	} // end of main
 

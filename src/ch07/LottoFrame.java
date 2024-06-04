@@ -106,7 +106,6 @@ public class LottoFrame extends JFrame implements ActionListener {
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paint(g);
 		
 		Font f= new Font("궁서체",Font.BOLD,20);
